@@ -1,0 +1,191 @@
+<!DOCTYPE html><html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Riya ❤️</title><style>
+body{
+  margin:0;
+  background:black;
+  color:white;
+  font-family:sans-serif;
+  overflow:hidden;
+  text-align:center;
+}
+
+/* stars */
+.star{
+  position:absolute;
+  width:2px;
+  height:2px;
+  background:white;
+  animation:twinkle 2s infinite;
+}
+@keyframes twinkle{
+  0%,100%{opacity:0.3;}
+  50%{opacity:1;}
+}
+
+/* center */
+.center{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  width:90%;
+}
+
+/* button */
+button{
+  padding:12px 20px;
+  border:none;
+  border-radius:10px;
+  background:pink;
+  cursor:pointer;
+}
+
+/* typing */
+#text{
+  font-size:20px;
+  min-height:60px;
+}
+
+/* image */
+#photo{
+  width:230px;
+  border-radius:20px;
+  filter:blur(15px);
+  transition:2s;
+  display:block;
+  margin:auto;
+}
+
+/* birthday */
+#birthday{
+  font-size:38px;
+  margin-top:15px;
+  background: linear-gradient(45deg,pink,cyan,yellow);
+  -webkit-background-clip:text;
+  color:transparent;
+  animation: glow 2s infinite alternate, zoom 2s infinite alternate;
+}
+
+@keyframes glow{
+  from{text-shadow:0 0 10px pink;}
+  to{text-shadow:0 0 30px cyan;}
+}
+@keyframes zoom{
+  from{transform:scale(1);}
+  to{transform:scale(1.1);}
+}
+
+/* fade */
+.fade{
+  animation: fadeout 2s forwards;
+}
+@keyframes fadeout{
+  to{opacity:0;}
+}
+</style></head><body><audio id="music" src="music.mp3" loop></audio>
+
+<div class="center" id="start">
+<h2>Some messages are not written on paper…</h2>
+<button onclick="start()">Read the sky ✨</button>
+</div><div class="center" id="main" style="display:none;">
+<p id="text"></p><img id="photo" src="riya.jpg" style="display:none;"><h1 id="birthday" style="display:none;">Happy Birthday Riya ❤️</h1><p id="finalMsg" style="font-size:18px;"></p>
+</div><script>
+
+// stars
+for(let i=0;i<120;i++){
+  let s=document.createElement("div");
+  s.className="star";
+  s.style.top=Math.random()*100+"vh";
+  s.style.left=Math.random()*100+"vw";
+  document.body.appendChild(s);
+}
+
+// intro
+let intro=[
+"They are written in the stars...",
+"And tonight… this sky has something for you, Riya 💖",
+"Out of millions of stars...",
+"One shines differently ✨",
+"And that star… is you 🌙"
+];
+
+let i=0;
+function showIntro(){
+  if(i<intro.length){
+    document.getElementById("text").innerText=intro[i];
+    i++;
+    setTimeout(showIntro,3000);
+  } else {
+    showPhoto();
+  }
+}
+
+// start
+function start(){
+  document.getElementById("start").style.display="none";
+  document.getElementById("main").style.display="block";
+  document.getElementById("music").play();
+  showIntro();
+}
+
+// photo reveal
+function showPhoto(){
+  let img=document.getElementById("photo");
+  let bday=document.getElementById("birthday");
+
+  img.style.display="block";
+
+  setTimeout(()=>{
+    img.style.filter="blur(0)";
+  },500);
+
+  setTimeout(()=>{
+    bday.style.display="block";
+  },2000);
+
+  // ONLY birthday fade (photo stays)
+  setTimeout(()=>{
+    bday.classList.add("fade");
+  },6000);
+
+  setTimeout(()=>{
+    startMessages();
+  },8000);
+}
+
+// messages
+let msgs=[
+"Moti aap hamesha khush raho ❤️",
+" Aap aapne life mai Succesful ho jao Aapke sare dream pura ho 😊",
+"Hamesha Strong or Helthy raho 💖"
+];
+
+let m=0,c=0;
+function typeMsg(){
+  let el=document.getElementById("finalMsg");
+
+  if(m<msgs.length){
+    if(c<msgs[m].length){
+      el.innerHTML += msgs[m].charAt(c);
+      c++;
+      setTimeout(typeMsg,50);
+    } else {
+      setTimeout(()=>{
+        el.innerHTML="";
+        c=0;
+        m++;
+        typeMsg();
+      },2000);
+    }
+  }
+}
+
+function startMessages(){
+  typeMsg();
+}
+
+</script></body>
+</html>
